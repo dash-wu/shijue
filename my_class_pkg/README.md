@@ -1,6 +1,8 @@
 # my_class_pkg
 
-ROS 课堂示例包：**动态重配置（`dynamic_reconfigure`）** 与 **按动态参数发布 `cmd_vel` 线速度**，另含日志与巡线相关脚本。
+ROS 课堂示例包：**动态重配置（`dynamic_reconfigure`）** 与 **按动态参数发布 `cmd_vel` 线速度**，并含日志、巡线、手势、AprilTag 跟随与 **逆解抓取（`tag_grab_node`）** 等脚本/节点。
+
+**五个实验的完整启动指令（逐项可复制）见仓库根目录 [`../README.md`](../README.md)。**
 
 > **完整「参数与动态参数」练习**（`ros_param`、`ros_param.py`、`parameter.launch`、`dynamic_reconfigure_node` 等）在独立工作空间  
 > **`~/workspace/ex7pcyy/repo`**，请参阅该目录下的 `README.md`。
@@ -18,10 +20,15 @@ my_class_pkg/
 ├── scripts/
 │   ├── ros_log.py
 │   ├── follow_line.py
+│   ├── get_ros_image.py
+│   ├── upros_gesture.py
+│   ├── gesture_movement.py
+│   ├── apriltag_follow.py
 │   └── start_robot_speed_demo.sh
 └── src/
     ├── ros_log.cpp
-    └── ros_dynamic_speed.cpp
+    ├── ros_dynamic_speed.cpp
+    └── tag_grab.cpp           # 编译为 tag_grab_node
 ```
 
 ## 编译
@@ -65,7 +72,11 @@ roslaunch my_class_pkg robot_dynamic_speed.launch cmd_vel_topic:=/你的话题
 |------|------|
 | `ros_log` | C++ 日志示例 |
 | `ros_log.py` | Python 日志示例 |
-| `follow_line.py` | 巡线相关脚本 |
+| `follow_line.py` | 巡线 |
+| `get_ros_image.py` | 取图示例 |
+| `upros_gesture.py` / `gesture_movement.py` | 手势识别与机械臂联动 |
+| `apriltag_follow.py` | AprilTag 跟随 |
+| `tag_grab_node` | AprilTag 位姿 + 逆解抓取（C++） |
 
 ## 与 `~/ros_class_ws` 的关系
 
