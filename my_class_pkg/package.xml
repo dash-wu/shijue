@@ -40,6 +40,15 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
   <exec_depend>upros_message</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>actionlib_msgs</exec_depend>
+  <exec_depend>move_base_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>tf_conversions</exec_depend>
+  <exec_depend>upros_arm</exec_depend>
+  <exec_depend>upros_chat</exec_depend>
+  <exec_depend>python3-jieba</exec_depend>
+  <exec_depend>apriltag_ros</exec_depend>
 
   <export />
 </package>

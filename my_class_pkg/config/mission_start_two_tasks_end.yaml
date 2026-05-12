@@ -1,0 +1,13 @@
+# [x_m, y_m, yaw_deg]；目标均在 map 坐标系下。
+#
+# 任意位置出发：车体停好后在 RViz「2D Pose Estimate」对准当前真实位置与朝向，
+# AMCL 收敛后，脚本会依次发 TASK1/TASK2/END——move_base 会从「当前位置」规划到第一点。
+
+goal_timeout_sec: 120.0
+
+waypoints:
+  TASK1: [2.621, -1.583, 0.000]
+  TASK2: [2.687, -3.070, 0.000]
+  END: [-0.776, -2.419, 0.000]
+
+visit_order: [TASK1, TASK2, END]

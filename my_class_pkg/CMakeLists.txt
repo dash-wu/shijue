@@ -45,10 +45,24 @@ install(PROGRAMS
   scripts/upros_gesture.py
   scripts/gesture_movement.py
   scripts/apriltag_follow.py
+  scripts/llm_chat.py
+  scripts/start_voice_llm.sh
+  scripts/source_voice_llm_env.sh
+  scripts/tokenizer.py
+  scripts/voice_control.py
+  scripts/grab_intent.py
+  scripts/test_arm_services.py
+  scripts/voice_tag_feedback.py
+  scripts/arena_mission.py
+  scripts/goto_waypoints_named.py
   scripts/start_robot_speed_demo.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+)
+
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
 )

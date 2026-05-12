@@ -1,0 +1,14 @@
+<launch>
+  <!-- 语音识别 + Kimi 大模型 + VITS 朗读（tts_player 订阅 /talk） -->
+  <!-- 集成声卡：播完后额外不送识别器的秒数，仍误识可略调大 -->
+  <param name="/tts_tail_silence_sec" value="0.45" />
+  <include file="$(find upros_chat)/launch/speech_to_word.launch" />
+  <include file="$(find upros_chat)/launch/word_to_speech.launch" />
+  <node
+    pkg="my_class_pkg"
+    type="llm_chat.py"
+    name="robot_voice_llm_node"
+    output="screen"
+    args="--ros"
+  />
+</launch>

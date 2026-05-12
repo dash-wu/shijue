@@ -1,0 +1,9 @@
+<!--
+  TASK1 → TASK2 → END。默认配置：config/mission_start_two_tasks_end.yaml
+-->
+<launch>
+  <arg name="config" default="$(find my_class_pkg)/config/mission_start_two_tasks_end.yaml"/>
+  <node pkg="my_class_pkg" type="goto_waypoints_named.py" name="goto_four_points" output="screen">
+    <rosparam command="load" file="$(arg config)"/>
+  </node>
+</launch>

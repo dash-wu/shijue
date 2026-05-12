@@ -1,0 +1,29 @@
+<launch>
+  <!--
+    语音抓取流程（与代码对应）：
+    1) 麦克风 + speech_recognition：识别「抓取一号/二号」→ 发布 /speech/result
+    2) voice_control：解析目标 tag id（1 或 2）→ 发布 /voice_control (TagCommand)
+    3) 相机已在 bringup 中打开；apriltag_ros 订阅 /camera/color/image_raw，发布 tag 位姿 → TF 中 tag_1 / tag_2
+    4) tag_grab_node：订阅 /voice_control，lookup arm_base_link←tag_N，视觉微调后调机械臂服务抓取并回零
+    说明：本栈不发布 /cmd_vel，底盘轮子不会自动走；若臂不动，多半是 TF 拿不到 tag 或服务未执行（见终端 ERROR/WARN）。
+    需先：相机与机械臂已起；完整 bringup_w2a 会发布 base_link/arm_base_link 等 TF。
+    若仅起了相机节点、未带静态 TF，会导致 arm_base_link 不存在、机械臂不动——可设 publish_w2a_tf:=true。
+  -->
+  <!-- 语音抓取栈：需先已启动底盘/相机（如 upros_bringup bringup_w2a.launch） -->
+  <arg name="publish_w2a_tf" default="false" doc="true：发布 w2a 机体/臂/相机静态 TF（与 bringup_w2a 重复时请设 false）"/>
+  <include if="$(arg publish_w2a_tf)" file="$(find my_class_pkg)/launch/robot_tf_w2a_static.launch"/>
+  <arg name="tts" default="true" doc="是否启动 TTS（播完会静音 ASR 防串音）"/>
+  <arg name="input_device" default="-1" doc="麦克风 sounddevice 索引，-1 为不按索引；指定数字则优先于名称"/>
+  <arg name="input_device_name" default="Q5" doc="默认匹配 MicroPhone-Q5+ / Q5+: USB Audio；改不动时设为空并用手动索引"/>
+  <param name="/tts_tail_silence_sec" value="0.45" />
+  <include file="$(find upros_chat)/launch/speech_to_word.launch">
+    <arg name="input_device" value="$(arg input_device)" />
+    <arg name="input_device_name" value="$(arg input_device_name)" />
+  </include>
+  <include if="$(arg tts)" file="$(find upros_chat)/launch/word_to_speech.launch" />
+  <include file="$(find upros_arm)/launch/recognize_apriltag.launch" />
+  <node pkg="my_class_pkg" type="voice_control.py" name="tokenizer_publisher" output="screen" />
+  <node pkg="my_class_pkg" type="tag_grab_node" name="tag_grab_node" output="screen" />
+  <!-- 文字反馈：voice_control 发 /voice_tag_feedback/text；ASR 发 /voice_tag_feedback/asr_raw；可选 voice_tag_feedback 发 combined -->
+  <node pkg="my_class_pkg" type="voice_tag_feedback.py" name="voice_tag_feedback" output="screen" />
+</launch>
