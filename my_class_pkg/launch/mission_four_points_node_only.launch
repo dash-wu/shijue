@@ -1,15 +1,10 @@
-<!-- bringup 后本启动：navigation + Apriltag + TTS + 三航点；map_name 与 maps/ 下 yaml 一致 -->
+<!-- 航点 + AprilTag + TTS；navigation 请另开终端。勿与 mission_four_points.launch 重复起 map/move_base。 -->
 <launch>
   <arg name="config" default="$(find my_class_pkg)/config/mission_start_two_tasks_end.yaml"/>
-  <arg name="map_name" default="my_lab.yaml"/>
   <include file="$(find upros_chat)/launch/word_to_speech.launch"/>
   <include file="$(find upros_arm)/launch/recognize_apriltag.launch"/>
-  <include file="$(find upros_navigation)/launch/navigation.launch">
-    <arg name="map_name" value="$(arg map_name)"/>
-  </include>
   <node pkg="my_class_pkg" type="goto_waypoints_named.py" name="goto_four_points" output="screen">
     <rosparam command="load" file="$(arg config)"/>
-    <param name="startup_delay_sec" value="10"/>
     <param name="wait_map_tf_sec" value="120"/>
   </node>
 </launch>

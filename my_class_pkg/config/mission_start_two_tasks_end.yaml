@@ -1,13 +1,21 @@
-# [x_m, y_m, yaw_deg]；目标均在 map 坐标系下。
-#
-# 任意位置出发：车体停好后在 RViz「2D Pose Estimate」对准当前真实位置与朝向，
-# AMCL 收敛后，脚本会依次发 TASK1/TASK2/END——move_base 会从「当前位置」规划到第一点。
+# ---------------------------------------------------------------------------
+# 第五周 / 期末三任务点：TASK1 → TASK2 → END（visit_order）
+# 坐标 [x_m, y_m] 为 map；航向见下方。
+# AprilTag：默认在 TASK1、TASK2 停车后 tag_scan_duration_sec 秒内找 id=tag_target_id；
+#           识别到 → 语音「识别到目标」；否则「未识别到目标」。END 不识别。
+# 课程 PDF 若放在本机 Download 等目录，请对照 PDF 微调坐标与角度。
+# ---------------------------------------------------------------------------
 
 goal_timeout_sec: 120.0
 
+tag_check_at: [TASK1, TASK2]
+tag_scan_duration_sec: 5.0
+tag_target_id: 1
+
 waypoints:
-  TASK1: [2.621, -1.583, 0.000]
-  TASK2: [2.687, -3.070, 0.000]
-  END: [-0.776, -2.419, 0.000]
+  # 航向：[x,y,yaw°] 绝对角；或 [x,y,trigger|departure,偏移°] 相对角（trigger=发单前车头，departure=任务开始时车头）
+  TASK1: [2.621, -1.583, "trigger", -90]
+  TASK2: [2.687, -3.070, "departure", 90]
+  END: [-0.776, -2.419, 0.0]
 
 visit_order: [TASK1, TASK2, END]

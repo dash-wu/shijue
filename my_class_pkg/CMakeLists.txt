@@ -55,6 +55,7 @@ install(PROGRAMS
   scripts/voice_tag_feedback.py
   scripts/arena_mission.py
   scripts/goto_waypoints_named.py
+  scripts/start_mission_two_tasks.sh
   scripts/start_robot_speed_demo.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

@@ -2,7 +2,7 @@
 
 ROS 课堂示例包：**动态重配置（`dynamic_reconfigure`）** 与 **按动态参数发布 `cmd_vel` 线速度**，并含日志、巡线、手势、AprilTag 跟随与 **逆解抓取（`tag_grab_node`）** 等脚本/节点。
 
-**五个实验的完整启动指令（逐项可复制）见仓库根目录 [`../README.md`](../README.md)。**
+**六个实验的完整启动指令（逐项可复制）见仓库根目录 [`../README.md`](../README.md)；含 **实验六**（三任务点导航 + AprilTag 语音 + 可选键盘遥控）。**
 
 > **完整「参数与动态参数」练习**（`ros_param`、`ros_param.py`、`parameter.launch`、`dynamic_reconfigure_node` 等）在独立工作空间  
 > **`~/workspace/ex7pcyy/repo`**，请参阅该目录下的 `README.md`。
