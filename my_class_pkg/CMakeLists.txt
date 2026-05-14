@@ -60,6 +60,20 @@ install(PROGRAMS
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+# 实验六脚本（与源码同名 .sh）；安装后：rosrun my_class_pkg exp6_a_bringup.sh
+install(PROGRAMS
+  scripts/exp6_a_bringup.sh
+  scripts/exp6_b_navigation.sh
+  scripts/exp6_c_view_nav.sh
+  scripts/exp6_d_mission.sh
+  scripts/exp6_e_teleop.sh
+  scripts/exp6_one_click.sh
+  scripts/exp6_run.sh
+  scripts/exp6_export_path.sh
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(FILES scripts/exp6_alias.sh DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
 install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )

@@ -6,5 +6,10 @@
   <node pkg="my_class_pkg" type="goto_waypoints_named.py" name="goto_four_points" output="screen">
     <rosparam command="load" file="$(arg config)"/>
     <param name="wait_map_tf_sec" value="120"/>
+    <param name="post_tf_settle_sec" value="4.0"/>
+    <param name="after_clear_settle_sec" value="2.0"/>
+    <param name="clear_costmaps_before_mission" value="true"/>
+    <param name="goal_abort_retries" value="2"/>
+    <param name="retry_clear_costmap_on_abort" value="true"/>
   </node>
 </launch>

@@ -1,21 +1,39 @@
 # ---------------------------------------------------------------------------
-# 第五周 / 期末三任务点：TASK1 → TASK2 → END（visit_order）
+# 期末多任务点：顺序见 visit_order（示例为 TASK1 → TASK2 → TASK3 → END）
 # 坐标 [x_m, y_m] 为 map；航向见下方。
-# AprilTag：默认在 TASK1、TASK2 停车后 tag_scan_duration_sec 秒内找 id=tag_target_id；
-#           识别到 → 语音「识别到目标」；否则「未识别到目标」。END 不识别。
-# 课程 PDF 若放在本机 Download 等目录，请对照 PDF 微调坐标与角度。
+# AprilTag：到点停车后再识 tag；tag_scan_duration_sec=未识别到时的最长等待；识别到会提前结束。
+# tts_nonblocking=true：播报后不 sleep，立刻发下一航点（减少「识别完半天不走」；需听清语音可改 false）。
+# 坐标请用 ~/upros_class_code/scripts/tutorial_read_pose_map.sh 标定后填写。
 # ---------------------------------------------------------------------------
 
 goal_timeout_sec: 120.0
 
-tag_check_at: [TASK1, TASK2]
-tag_scan_duration_sec: 5.0
+tag_check_at: [TASK1, TASK3]
+tag_scan_duration_sec: 0.6
+tts_nonblocking: true
+tts_pause_sec: 0.35
 tag_target_id: 1
 
 waypoints:
-  # 航向：[x,y,yaw°] 绝对角；或 [x,y,trigger|departure,偏移°] 相对角（trigger=发单前车头，departure=任务开始时车头）
+  # 航向：[x,y,yaw°] 绝对角；第三项写 bearing 表示朝向为「当前车位置→该点」（到点更稳）；或 [x,y,trigger|departure,偏移°]。
   TASK1: [2.621, -1.583, "trigger", -90]
-  TASK2: [2.687, -3.070, "departure", 90]
-  END: [-0.776, -2.419, 0.0]
+  # TASK2：map→base_link 实测采样（停车 8s 脚本）
+  TASK2: [0.257, -2.690, -63.638]
+  # TASK3：原未改 TASK2 时的坐标（相对出发车头 +90°）
+  TASK3: [2.687, -3.070, "departure", 90]
+  END: [-0.776, -2.419, "bearing"]
 
-visit_order: [TASK1, TASK2, END]
+visit_order: [TASK1, TASK2, TASK3, END]
+
+# DWA 线速上限：出发→TASK1 与 launch/upros_navigation 里默认一致（当前多为 0.78）。
+# boost_at_start：发第一个点前就写入该上限，TASK1～END 结束前保持同一 cap（到 END 后恢复）。
+# 若体感仍后半段偏慢，多半是弯道/狭窄代价约束，可把 max_vel 略调高（如 0.82～0.88）先试。
+# （可选）再在中途冲高：boost_after_waypoint 填某航点名，到达后再改 max_vel_x/trans。
+speed_boost:
+  enable: true
+  boost_at_start: true
+  boost_after_waypoint: ""
+  restore_after_waypoint: END
+  max_vel_x: 0.78
+  max_vel_trans: 0.78
+

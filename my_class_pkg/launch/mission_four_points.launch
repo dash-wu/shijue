@@ -11,5 +11,13 @@
     <rosparam command="load" file="$(arg config)"/>
     <param name="startup_delay_sec" value="10"/>
     <param name="wait_map_tf_sec" value="120"/>
+    <param name="post_tf_settle_sec" value="4.0"/>
+    <param name="after_clear_settle_sec" value="2.0"/>
+    <param name="clear_costmaps_before_mission" value="true"/>
+    <param name="goal_abort_retries" value="2"/>
+    <param name="retry_clear_costmap_on_abort" value="true"/>
+    <!-- 卡在固定点但 move_base 仍 ACTIVE：无向目标接近则清图并由脚本重试 -->
+    <param name="stuck_recovery_enable" value="true"/>
+    <param name="clear_costmaps_on_stuck" value="true"/>
   </node>
 </launch>
