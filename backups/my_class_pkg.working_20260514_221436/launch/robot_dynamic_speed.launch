@@ -1,0 +1,19 @@
+<launch>
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="launch_rqt" default="true" />
+
+  <include file="$(find upros_bringup)/launch/bringup_w2a.launch" />
+
+  <node pkg="my_class_pkg"
+        type="ros_dynamic_speed_node"
+        name="ros_dynamic_speed_node"
+        output="screen">
+    <param name="cmd_vel_topic" value="$(arg cmd_vel_topic)" />
+  </node>
+
+  <node if="$(arg launch_rqt)"
+        pkg="rqt_reconfigure"
+        type="rqt_reconfigure"
+        name="rqt_reconfigure"
+        output="screen" />
+</launch>

@@ -11,3 +11,8 @@ __pycache__/
 *.p.save
 # Editor/duplicate backups masquerading as .p
 *.p
+
+# Full-tree copies of my_class_pkg at repo root (keep single canonical my_class_pkg/)
+my_class_pkg.backup.*/
+my_class_pkg.pp.backup.*/
+my_class_pkg.pre_restore_*/

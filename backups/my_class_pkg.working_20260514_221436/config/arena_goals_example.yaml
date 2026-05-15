@@ -1,0 +1,53 @@
+# 期末实战航点 — map 系；yaw_deg 与教材 ros_pub_goal.py 一致。
+# 每一段可用「多个中继点」，按顺序发往 move_base：每点都会触发一次全局路径规划(GlobalPlanner)
+# 再在局部由 DWA 跟踪并避障（另一台车会出现在地图外动态障碍，靠激光重规划应对）。
+#
+# 兼容：若只保留 leave_start 单点 [x,y,yaw] 不写 *_waypoints，仍可运行。
+
+start_delay_sec: 4.0
+goal_timeout_sec: 120.0
+nav_retry_per_waypoint: 5
+log_global_plan: true
+global_plan_topic: "/move_base/GlobalPlanner/plan"
+
+tag_id: 1
+tag_topic: "/tag_detections"
+tag_confirm_frames: 8
+tag_search_timeout_sec: 14.0
+
+tts_talk_topic: "/talk"
+tts_pause_sec: 2.8
+tts_found: "已找到目标"
+tts_lost: "未找到目标"
+
+# 离场：先出启动区再朝中廊，示例 2 个中继点（请按实场改）
+leave_start_waypoints:
+  - [0.25, 0.0, 0.0]
+  - [0.45, 0.0, 0.0]
+
+# 进房间1：门口前 + 门内
+room1_entry_waypoints:
+  - [0.85, 1.35, 30.0]
+  - [1.0, 1.5, 0.0]
+
+# 桌前：可写「门口侧 + 桌前」提高通过性
+room1_table_waypoints:
+  - [1.45, 1.85, 0.0]
+  - [1.85, 1.95, 0.0]
+
+room2_entry_waypoints:
+  - [0.85, -1.35, -30.0]
+  - [1.0, -1.5, 0.0]
+
+room2_table_waypoints:
+  - [1.45, -1.85, 0.0]
+  - [1.85, -1.95, 0.0]
+
+# 返程穿越障碍中间带：可多加中间点贴「走廊中轴」
+return_middle_waypoints:
+  - [0.9, 0.0, 180.0]
+  - [0.55, 0.0, 180.0]
+
+finish_waypoints:
+  - [0.15, 0.0, 180.0]
+  - [-0.2, 0.0, 180.0]

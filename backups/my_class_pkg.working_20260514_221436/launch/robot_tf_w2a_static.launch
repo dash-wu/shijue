@@ -1,0 +1,10 @@
+<launch>
+  <!--
+    与 upros_bringup/launch/bringup_w2a.launch 中「机体 / 臂 / 相机」静态 TF 一致。
+    当未启动完整 bringup、或静态 TF 节点未起来时，tag_grab 需要 arm_base_link←tag 的完整链。
+    若已运行 bringup_w2a，可再设 voice_tag_grab.launch 的 publish_w2a_tf:=false 避免重复。
+  -->
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0 0 0 0 base_footprint base_link 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_arm_base_link" args="0.0 0.0 0.1704 0 0 0 base_link arm_base_link 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link" args="0.142 0.00 0.10 0 0 0 base_link camera_link 100"/>
+</launch>

@@ -1,0 +1,20 @@
+<!--
+  实战任务栈（视觉 + 播报 + 状态机）。
+  用法（推荐三终端）：
+    终端1: roslaunch upros_bringup bringup_w2a.launch
+    终端2: roslaunch upros_navigation navigation.launch map_name:=my_lab.yaml
+    终端3: roslaunch my_class_pkg arena_mission.launch
+  可先 rviz view_nav.launch 上做 2D Pose Estimate。
+  航点在 config/arena_goals_example.yaml：每段可列多个中继点；move_base(GlobalPlanner+DWA) 对每点规划路径。
+  RViz 可加 Path 订阅 /move_base/GlobalPlanner/plan 观察全局路径。
+-->
+<launch>
+  <arg name="goals_file" default="$(find my_class_pkg)/config/arena_goals_example.yaml"/>
+
+  <include file="$(find upros_chat)/launch/word_to_speech.launch"/>
+  <include file="$(find upros_arm)/launch/recognize_apriltag.launch"/>
+
+  <node pkg="my_class_pkg" type="arena_mission.py" name="arena_mission" output="screen">
+    <rosparam command="load" file="$(arg goals_file)" />
+  </node>
+</launch>

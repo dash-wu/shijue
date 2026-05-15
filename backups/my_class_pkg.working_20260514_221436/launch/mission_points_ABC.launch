@@ -1,0 +1,11 @@
+<!--
+  A/B/C 任务点巡航：bringup + navigation 已就绪、RViz 已做初定位后，
+  rosrun/roslaunch 本文件。
+  改坐标：编辑 my_class_pkg/config/mission_points_ABC_example.yaml
+-->
+<launch>
+  <arg name="config" default="$(find my_class_pkg)/config/mission_points_ABC_example.yaml"/>
+  <node pkg="my_class_pkg" type="goto_waypoints_named.py" name="goto_waypoints_named" output="screen">
+    <rosparam command="load" file="$(arg config)"/>
+  </node>
+</launch>

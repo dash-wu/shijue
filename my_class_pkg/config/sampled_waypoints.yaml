@@ -1,0 +1,10 @@
+# 自动生成 —— 由 sample_waypoints_enter.py 采样
+waypoints:
+  TASK1: [2.623, -1.363, -75.83]
+  TASK2: [2.071, -0.398, 178.28]
+  TASK3: [2.587, -3.399, 86.09]
+  TASK4: [1.976, -4.214, 163.60]
+  TASK5: [0.560, -2.973, 165.83]
+  END: [-0.471, -2.528, 173.68]
+
+visit_order: [TASK1, TASK2, TASK3, TASK4, TASK5, END]
